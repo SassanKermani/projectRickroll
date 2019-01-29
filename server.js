@@ -27,7 +27,14 @@ app.use(morgan('dev'));
 =            GTFO            =
 ============================*/
 
-require('./router/guiRouter.js')(passport);
+//loginRouter
+let loginRouter = require(`./routers/loginRouter.js`);
+app.use(`/login`, loginRouter);
+
+//defult page
+app.get(`/*`,(req,res)=>{
+	res.render(`defult`, {test : `Test Thing`});
+});
 
 /*=====  End of GTFO  ======*/
 /*----------  Listen  ----------*/
