@@ -1,1 +1,8 @@
-kk this is a thing I gess
+
+DB: 
+-userData.json
+-users/
+-messageData.json
+-messags/
+
+
