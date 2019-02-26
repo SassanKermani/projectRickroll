@@ -6,12 +6,19 @@
 
 /*=====  End of Set up  ======*/
 
+/*----------  Cheack userObj  ----------*/
+let cheackUserObj = ()=>{
+	
+}
+
 /*----------  Login  ----------*/
 let login = (req, res)=>{
-	
-	console.log(req.body)
 
-	res.send(`KO`)
+	console.log(req.body.userObj != undefined);
+
+	res.send(`KO`);
+
+	// if(req.body.userObj != undefined);
 }
 
 
@@ -21,7 +28,7 @@ let login = (req, res)=>{
 ==============================*/
 
 module.exports ={
-	login
+	login,
 }
 
 /*=====  End of Export  ======*/
