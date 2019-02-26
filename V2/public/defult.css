@@ -1,0 +1,19 @@
+body{
+	background-color: grey;
+}
+
+.dot {
+	text-align: center;
+	height: 25vw;
+	width: 25vw;
+	background-color: black;
+	color: white;
+	border-radius: 50%;
+	display: block;
+	margin: auto;
+	padding-top: 
+}
+
+.dot p {
+	font-size: 10px;
+}
