@@ -1,3 +1,4 @@
+
 /*=============================
 =            SetUp            =
 =============================*/
@@ -14,12 +15,7 @@ let controle = require(`../controllers/loginController.js`)
 =            Routes            =
 ==============================*/
 
-router.post(`*`, controle.login);
-
-// //test
-// router.get(`*`, (req, res)=>{
-// 	res.send("KO")
-// });
+router.post(`/inishal`, controle.login);
 
 
 /*=====  End of Routes  ======*/
