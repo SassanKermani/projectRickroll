@@ -1,87 +1,88 @@
+// var start = new Date()
+// var hrstart = process.hrtime()
+// var simulateTime = 5
 
-let fs = require(`fs`);
-const bcrypt = require(`bcrypt`);
+// setTimeout(function(argument) {
+// 	// execution time simulated with setTimeout function
+// 	var end = new Date() - start,
+// 		hrend = process.hrtime(hrstart)
 
-/*==================================
-=            Write File            =
-==================================*/
+// 	console.info('Execution time: %dms', end)
+// 	console.info('Execution time (hr): %ds %dms', hrend[0], hrend[1] / 1000000)
+// }, simulateTime)
 
-// let WiteFileName = `thing.txt`;
+/*------------------------------------------------------------------------------------------*/
 
-// let WiteFileObj = `
-// 	test : "test",
-// 	testTwo : ["test", "test", "test"],
-// 	testThree : {
-// 		test : "test thing"
-// 	}
-// `;
 
-// fs.writeFile(WiteFileName, WiteFileObj, function (err) {
-// 	if (err) throw err;
-// 	console.log('Saved!');
-// });
+// let hrstart = process.hrtime();
+// hrend = process.hrtime(hrstart);
 
-/*=====  End of Write File  ======*/
+// let fs = require(`fs`);
 
-/*=======================================
-=            see files in db            =
-=======================================*/
+// // try{
+// // 	let oldTest = require(`./json.json`);
+// // }catch{
 
-// let path = `./db`
+// // }
 
-// fs.readdir(path, (err, files)=>{
-// 	if(err) throw err;
-// 	console.log(files);
-// });
-
-/*=====  End of see files in db  ======*/
-
-/*=================================
-=            Read File            =
-=================================*/
-
-// let readFileName = `thing.txt`;
-
-// fs.readFile(readFileName, `utf8`, (err, data)=>{
-// 	if(err) throw err;
-// 	// console.log(data);
-// 	console.log(JSON.parse(`{ ${data} }`));
-// });
-
-/*=====  End of Read File  ======*/
-
-/*==============================
-=            Update            =
-==============================*/
-
-// let updateFileName = `thing.txt`;
-
-// fs.appendFile(updateFileName, `, "cool-lets-do-this-thing" : "this is a test man",`, (err)=>{
-// 	if(err) throw err;
-// });
-
-/*=====  End of Update  ======*/
-
-/*===================================
-=            bcrypt Test            =
-===================================*/
-
-// let password = `password`;
-
-// bcrypt.hash(password, 10, function(err, hash) {
-	
-// 	console.log(hash);
-
-// 	bcrypt.compare(password, hash, function(err, res) {
-// 		if(err) throw err;
-// 		console.log(`password ${res}`);
+// try{
+// 	fs.readFile('./json.json', (err, data) => {
+// 		if (err) throw err;
+// 		let oldTest = data;
 // 	});
+// }catch{
 
-// 	bcrypt.compare(`not password`, hash, function(err, res) {
-// 		if(err) throw err;
-// 		console.log(`not password  ${res}`);
-// 	});
+// }
 
-// });
 
-/*=====  End of bcrypt Test  ======*/
+// console.log(`${hrend[0]}'s : ${hrend[1]/1000000}ms`);
+
+/*------------------------------------------------------------------------------------------*/
+
+let requireMethod = ()=>{
+	return(new Promise((resolve, reject)=>{
+
+		let hrstart = process.hrtime();
+		hrend = process.hrtime(hrstart);
+
+		try{
+			let oldTest = require(`./json.json`);
+			// console.log(oldTest);
+			resolve(`${hrend[0]}'s : ${hrend[1]/1000000}ms`);
+		}catch{
+
+		}
+
+	}));
+}
+
+let fsModualMethod = ()=>{
+	return(new Promise((resolve, reject)=>{
+
+		let hrstart = process.hrtime();
+		hrend = process.hrtime(hrstart);
+
+		try{
+
+			let fs = require(`fs`);
+
+			fs.readFile('./json.json', 'utf8', (err, data) => {
+				if (err) throw err;
+				let oldTest = data;
+				// console.log(data);
+				resolve(`${hrend[0]}'s : ${hrend[1]/1000000}ms`);
+			});
+		}catch{
+
+		}
+
+	}));
+}
+
+requireMethod().then((a)=>{
+	console.log(`requireMethod : ${a}`);
+});
+
+fsModualMethod().then((a)=>{
+	console.log(`fsModualMethod : ${a}`);
+});
