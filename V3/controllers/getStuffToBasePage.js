@@ -27,7 +27,6 @@ const parseJsonAsync = (jsonString)=>{
 	});
 }
 /*=====  End of Turn Json String into JSON  ======*/
-
 /*===================================
 =            Check Login            =
 ===================================*/
@@ -99,15 +98,17 @@ let getAllBOARDS = ()=>{
 		})
 	});
 };
-
-// getAllBOARDS().then((a)=>{
-// 	if(a){
-// 		console.log(a);
-// 	}else{
-// 		console.log(`falsy`)
-// 	}
-// })
 /*=====  End of Get All BOARDS  ======*/
+/*=====================================
+=            Get All Chats            =
+=====================================*/
+let getAllChats = ()=>{
+	return new Promise((resolve, reject)=>{
+																	//this is the bit we need to do stuff about
+	})
+}
+/*=====  End of Get All Chats  ======*/
+
 /*========================= FUNCTIONS ROUTS USE =========================*/
 
 /*======================================
@@ -117,26 +118,31 @@ let getAllBOARDS = ()=>{
 let LogInFisrtTime = (req, res)=>{
 	checkLogin(req).then((userGood)=>{
 		if(userGood == true){
-			// res.send(`userGood`);
-			fs.readFile(`./jsANDcss/boards.js`, 'utf8', (err , data)=>{
-				try{
-					if(err){ throw err };
 
-					ejs.renderFile(`./ejs/boards.ejs`, function(errr, str){
-						try{
-							if(errr){ throw errr };
-							
-							res.send({jsPage : data, ejsPage : str});
+			getAllBOARDS().then((boards)=>{
 
-						}catch(errr){
-							res.send(`5`);
-						}
-					})
+				fs.readFile(`./jsANDcss/boards.js`, 'utf8', (err , data)=>{
+					try{
+						if(err){ throw err };
 
-				}catch(err){
-					res.send(`6`);
-				}
-			});
+						ejs.renderFile(`./ejs/boards.ejs`, {boards : boards}, function(errr, str){
+							try{
+								if(errr){ throw errr };
+								
+								res.send({jsPage : data, ejsPage : str});
+
+							}catch(errr){
+								res.send(`5`);
+							}
+						})
+
+					}catch(err){
+						res.send(`6`);
+					}
+				});
+
+			})
+
 		}else{
 			res.send(`7`);
 		}

@@ -24,13 +24,13 @@ let login = ()=>{
 
 		xhttp.onreadystatechange = function(){
 			if (this.readyState == 4 && this.status == 200) {
-				console.log(typeof JSON.parse(this.responseText));
+				// console.log(typeof JSON.parse(this.responseText));
 				// console.log( JSON.parse(this.responseText));
 				let resObj = JSON.parse(this.responseText);
+				document.getElementById(`BOARDS`).innerHTML = resObj.ejsPage;
 				let tempScriptTag = document.createElement(`script`);
 				tempScriptTag.innerHTML = resObj.jsPage;
 				document.getElementsByTagName('head')[0].appendChild(tempScriptTag);
-				document.getElementById(`BOARDS`).innerHTML = resObj.ejsPage;
 			}
 		}
 
