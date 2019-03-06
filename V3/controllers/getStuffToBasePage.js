@@ -105,6 +105,7 @@ let getAllBOARDS = ()=>{
 let getAllChats = ()=>{
 	return new Promise((resolve, reject)=>{
 																	//this is the bit we need to do stuff about
+		
 	})
 }
 /*=====  End of Get All Chats  ======*/
