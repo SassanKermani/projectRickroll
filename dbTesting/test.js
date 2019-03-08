@@ -189,14 +189,33 @@
 
 /*---------------------------------------------------------------------------*/
 
-let start = new Date().getTime()
+// let start = new Date().getTime()
 
-let fs = require(`fs`);
+// let fs = require(`fs`);
 
-fs.readdir(`./ohGodWhy/`, (err, files)=>{
-	if(err){ throw err;}
-	// console.log(files);
-	
-	console.log(new Date().getTime() - start);
-	
-})
+// fs.readdir(`./ohGodWhy/`, (err, files)=>{
+// 	if(err){ throw err;}
+// 	// console.log(files);
+
+// 	console.log(new Date().getTime() - start);
+
+// })
+
+/*---------------------------------------------------------------------------*/
+ 
+let d = new Date();
+
+console.log(`${d.getFullYear()}:${d.getMonth()}:${d.getDate()}:${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}:${d.getMilliseconds()}`);
+
+// for(let i = 0; i < 10; i++){
+// 	console.log(`${d.getFullYear()}:${d.getMonth()}:${d.getDate()}:${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}:${d.getMilliseconds()}`);
+// }
+
+
+
+
+
+
+
+
+

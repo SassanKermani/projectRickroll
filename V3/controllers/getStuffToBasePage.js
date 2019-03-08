@@ -99,17 +99,84 @@ let getAllBOARDS = ()=>{
 	});
 };
 /*=====  End of Get All BOARDS  ======*/
-/*=====================================
-=            Get All Chats            =
-=====================================*/
-let getAllChats = ()=>{
-	return new Promise((resolve, reject)=>{
-																	//this is the bit we need to do stuff about
-		
+/*==========================================================
+=            Get Last Hundered Chats On A Board            =				//needs some fixing
+==========================================================*/
+let getLastHunderedChatsOnABoard = (boardName)=>{
+
+	// console.log(`hit getLastHunderedChatsOnABoard`);
+
+	let fileNumber = 0;
+	let maxNumberOfFilesReading = 99;
+	let arrOfChats = [];
+
+	return new Promise((finResolve, finReject)=>{
+
+		fs.readdir(`./Db/BOARDS/${boardName}`, (err, files)=>{
+			try{
+				if(err){ throw err };
+
+				// console.log(`files`);
+				// console.log(files);
+
+
+				if(files.length > 100){
+					maxNumberOfFilesReading = 99;
+				}else{
+					maxNumberOfFilesReading = files.length - 1;
+				}
+
+				let doStuff = ()=>{
+
+					// console.log(`doStuff`);
+
+					let tempPromis = new Promise((strResolve, strReject)=>{
+						fs.readFile(`./Db/BOARDS/${boardName}/${files[ files.length - (maxNumberOfFilesReading - fileNumber) - 1]}`, `utf8`, (errr, data)=>{
+							try{
+								if(errr){ throw errr };
+
+								strResolve(data)
+
+							}catch(errr){
+								console.log(`9`);
+								fileNumber++;
+								// FIGURE THIS OUT LATER
+							}
+						})
+					})
+
+					tempPromis.then((stuff)=>{
+						// console.log(`tempPromis.then`);
+
+						arrOfChats[fileNumber] = stuff;
+						fileNumber++;
+
+						if(fileNumber <= maxNumberOfFilesReading){
+
+							doStuff();
+						}else{
+
+							finResolve(arrOfChats);
+						}
+
+					})
+
+				}
+
+				doStuff();
+
+			}catch(err){
+				console.log(`8`);
+				// FIGURE THIS OUT LATER
+			}
+		})
+
 	})
 }
-/*=====  End of Get All Chats  ======*/
-
+getLastHunderedChatsOnABoard(`GLOBAL-CATASTROPHIC-RISK`).then((a)=>{
+	console.log(a.length);
+})
+/*=====  End of Get Last Hundered Chats On A Board  ======*/
 /*========================= FUNCTIONS ROUTS USE =========================*/
 
 /*======================================

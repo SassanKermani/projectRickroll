@@ -31,6 +31,7 @@ let login = ()=>{
 				let tempScriptTag = document.createElement(`script`);
 				tempScriptTag.innerHTML = resObj.jsPage;
 				document.getElementsByTagName('head')[0].appendChild(tempScriptTag);
+				document.getElementById(`login`).innerHTML=``;
 			}
 		}
 
