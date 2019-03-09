@@ -3,16 +3,13 @@
 ==============================*/
 
 let fs = require(`fs`);
-
+let date = new Date();
 
 /*=====  End of Set Up  ======*/
 /*======================================================
 =            Set Up Mesage Folder For a Bit            =				//fix to hit all folders in db
 ======================================================*/
-let makeDir = ()=>{
-
-	console.log(`hit makeDir`)
-
+let setUpDirsForYear = (yearSettingUp)=>{
 	/*----------  Vars start  ----------*/
 	
 	let months = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December` ];
@@ -39,16 +36,14 @@ let makeDir = ()=>{
 		leapYearNo();
 	}
 
-	let fileThatWeAreOne = 0;
-	let yearSettingUp = 2019;
+	let fileThatWeAreOn = 0;
+	// let yearSettingUp = 2019;
 	let monthThatWeAreOne = 0;
-	let DayThatWeAreOne = 0;
+	let dayThatWeAreOne = 0;
+	let doTheYearThing = true;
 	/*----------  Vars stop  ----------*/
 
 	fs.readdir(`./DB/BOARDS/`, (err, files)=>{
-
-		console.log(`read BOARDS`)
-
 		try{
 			if(err){
 				throw err;
@@ -58,44 +53,73 @@ let makeDir = ()=>{
 
 				let tempProm = new Promise((resolve, reject)=>{
 
-					if( DayThatWeAreOne == 0 ){
+					if(doTheYearThing == true){
 
-						fs.mkdir(`./DB/BOARDS/${files[fileThatWeAreOne]}/${months[monthThatWeAreOne]}`, (errr)=>{
+						fs.mkdir(`./DB/BOARDS/${files[fileThatWeAreOn]}/${yearSettingUp}`, (errr)=>{
 							try{
-								if(errr){ throw errr };
+								if(errr){ throw errr};
 
-								DayThatWeAreOne++;
 								resolve(true);
 
 							}catch(errr){
-								console.log(`errr at fs.makeder for months : ${months[monthThatWeAreOne]}`);
+								console.log(`AYYY I BET NOTHING JUST WORKED. YOU SCREWED, GOOD LUCK`)
 							}
-						})
+						});
+
 					}else{
 
-						fs.mkdir(`./DB/BOARDS/${files[fileThatWeAreOne]}/${months[monthThatWeAreOne]}/${DayThatWeAreOne}`, (errr)=>{
-							try{
-								if(errr){ throw errr };
+						if( dayThatWeAreOne == 0 ){
 
-								DayThatWeAreOne++;
-								resolve(true);
+							fs.mkdir(`./DB/BOARDS/${files[fileThatWeAreOn]}/${yearSettingUp}/${months[monthThatWeAreOne]}`, (errr)=>{
+								try{
+									if(errr){ throw errr };
 
-							}catch(errr){
-								console.log(`errr at fs.makeder for days : ${months[monthThatWeAreOne]}, ${DayThatWeAreOne}`);
-							}
-						})
+									dayThatWeAreOne++;
+									resolve(true);
 
+								}catch(errr){
+									console.log(`fileThatWeAreOn : ${fileThatWeAreOn}`);
+									console.log(`errr at fs.makeder for months : ${months[monthThatWeAreOne]}`);
+								}
+							})
+						}else{
+
+							fs.mkdir(`./DB/BOARDS/${files[fileThatWeAreOn]}/${yearSettingUp}/${months[monthThatWeAreOne]}/${dayThatWeAreOne}`, (errr)=>{
+								try{
+									if(errr){ throw errr };
+
+									dayThatWeAreOne++;
+									resolve(true);
+
+								}catch(errr){
+									console.log(`errr at fs.makeder for days : ${months[monthThatWeAreOne]}, ${dayThatWeAreOne}`);
+								}
+							})
+
+						}
 					}
-
 				})
 
 				tempProm.then((doseNotreallyMatter)=>{
-					if(DayThatWeAreOne > daysInEachMonths[monthThatWeAreOne]){
-						monthThatWeAreOne++;
-						DayThatWeAreOne = 0
-					}
+					if(doTheYearThing != true){
+						if(dayThatWeAreOne > daysInEachMonths[monthThatWeAreOne]){
+							monthThatWeAreOne++;
+							dayThatWeAreOne = 0
+						}
 
-					if(monthThatWeAreOne < months.length){
+						if(monthThatWeAreOne < months.length){
+							doTheRealWork();
+						}else if(fileThatWeAreOn < files.length - 1){
+							
+							dayThatWeAreOne = 0
+							monthThatWeAreOne = 0;
+							fileThatWeAreOn++;
+							doTheYearThing = true;
+
+							doTheRealWork();
+						}
+					}else{
+						doTheYearThing = false;
 						doTheRealWork();
 					}
 				})
@@ -111,7 +135,7 @@ let makeDir = ()=>{
 
 }
 
-makeDir();
+setUpDirsForYear(2019);
 
 /*=====  End of Set Up Mesage Folder For a Bit  ======*/
 /*====================================
@@ -167,6 +191,9 @@ let seeAllBoards = ()=>{
 	})
 }
 
-
+/*----------  See Todays Mesages  ----------*/
+let seeTodaysMesages = ()=>{
+	let 
+}
 
 /*=====  End of DB functions  ======*/
