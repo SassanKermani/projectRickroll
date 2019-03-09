@@ -7,7 +7,7 @@ let fs = require(`fs`);
 
 /*=====  End of Set Up  ======*/
 /*======================================================
-=            Set Up Mesage Folder For a Bit            =
+=            Set Up Mesage Folder For a Bit            =				//fix to hit all folders in db
 ======================================================*/
 let makeDir = ()=>{
 
@@ -101,70 +101,8 @@ let makeDir = ()=>{
 				})
 
 			}
-			
+
 			doTheRealWork();
-
-			// let doTheHardWork = ()=>{
-
-
-
-				// let tempProm = new Promise((resolve, reject)=>{
-
-				// 	fs.mkdir(`./DB/BOARDS/${files[fileThatWeAreOne]}/${months[monthThatWeAreOne]}/${DayThatWeAreOne}`, (errr)=>{
-						
-				// 		console.log(` made a folder `);
-
-				// 		try{
-
-				// 			if(errr){throw errr};
-
-				// 			if(DayThatWeAreOne == daysInEachMonths[monthThatWeAreOne]){
-								
-				// 				DayThatWeAreOne = 1
-				// 				monthThatWeAreOne++;
-
-				// 			}else{
-				// 				DayThatWeAreOne++;
-				// 			}
-
-				// 			resolve(true);
-
-				// 		}catch(errr){
-
-				// 			console.log(`OHHH THATS LIKE BAD, TWOO`);
-
-				// 			if(DayThatWeAreOne == daysInEachMonths[monthThatWeAreOne]){
-								
-				// 				DayThatWeAreOne = 1
-				// 				monthThatWeAreOne++;
-
-				// 			}else{
-				// 				DayThatWeAreOne++;
-				// 			}
-
-				// 			resolve(false);
-
-				// 		}
-				// 	})
-
-				// })
-
-
-				// tempProm.then((a)=>{
-
-				// 	console.log(`hit .then`)
-
-				// 	if(monthThatWeAreOne < months){
-				// 		doTheHardWork();
-				// 	}else{
-				// 		console.log(`done`)
-				// 	}
-
-				// })
-
-			// }
-
-			// doTheHardWork();
 
 		}catch(err){
 			console.log(`OHHH THATS LIKE BAD, THATS REAL BAD LIKE YOUR BONED MAN`);
@@ -228,6 +166,7 @@ let seeAllBoards = ()=>{
 		})
 	})
 }
+
 
 
 /*=====  End of DB functions  ======*/
