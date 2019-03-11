@@ -2,22 +2,18 @@
 =            Setup            =
 =============================*/
 
-let username = ``;
-let password = ``;
+console.log(`username : ${username}`);
 
 /*=====  End of Setup  ======*/
 
 Array.from(document.getElementsByClassName(`boardButton`)).forEach((a)=>{
 	
-	console.log(a.textContent)
+	// console.log(a.textContent)
 	a.onclick = ()=>{
-		// console.log(`${a.textContent}`);
+		
+		console.log(`${a.textContent}`);
 
-		username = `${document.getElementById(`username`).value}`;
-		password = `${document.getElementById(`password`).value}`;
-
-		document.getElementById(`usernameForOtherScriptFiles`).innerHTML = username;
-		document.getElementById(`passwordForOtherScriptFiles`).innerHTML = password;
+		console.log(`username : ${username}`);
 
 		if(username != `` && password != ``){
 
@@ -30,7 +26,7 @@ Array.from(document.getElementsByClassName(`boardButton`)).forEach((a)=>{
 					}
 				}
 
-				xhttp.open("POST", "/get/firstLogIn", true);
+				xhttp.open("POST", "/get/messagesFromMessageBoard", true);
 				xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
 				xhttp.send(JSON.stringify({
@@ -38,7 +34,7 @@ Array.from(document.getElementsByClassName(`boardButton`)).forEach((a)=>{
 						username : `${username}`,
 						password : `${password}`
 					},
-					
+					board : `${a.textContent.substring(1, a.textContent.length - 1)}`
 				}));
 
 		}

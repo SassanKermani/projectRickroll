@@ -15,6 +15,8 @@ let controller = require(`../controllers/getStuffToBasePage.js`)
 
 router.post(`/firstLogIn`, controller.LogInFisrtTime);
 
+router.post(`/messagesFromMessageBoard`, controller.GetMessageToUser);
+
 /*=====  End of Routs  ======*/
 
 /*----------  Export  ----------*/

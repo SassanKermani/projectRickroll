@@ -215,10 +215,23 @@ let writeMessage = (messageBoard, messageObj)=>{
 =======================================================*/
 let readTodaysMessagesOnOneBoard = (messageBoard, dateObj)=>{
 
+	if(dateObj == undefined){
+		dateObj = {
+			year : `${new Date().getFullYear()}`,
+			month : `${new Date().getMonth()}`,
+			day : `${new Date().getUTCDate()}`
+		}
+	}
+
+	// console.log(dateObj);
+
 	return new Promise((resolve, reject)=>{
 		if(dateObj.year != undefined && dateObj.year != `` && dateObj.year <= new Date().getFullYear() && dateObj.month != undefined && dateObj.month != `` &&  dateObj.month >= 1 &&  dateObj.month <= 11 && dateObj.day != undefined && dateObj.day != `` && dateObj.day >= 1 && dateObj.day <= 31 ){
 
-			fs.readdir(`./DB/BOARDS/${messageBoard}/${dateObj.year}/${months[dateObj.month]}/${dateObj.day}/`, (err, files)=>{
+			// console.log(`date`);
+			// console.log(`./DB/BOARDS/${messageBoard}/${dateObj.year}/${months[dateObj.month]}/${dateObj.day}`)
+
+			fs.readdir(`./DB/BOARDS/${messageBoard}/${dateObj.year}/${months[dateObj.month]}/${dateObj.day}`, (err, files)=>{
 				try{
 					if(err){ throw err };
 
@@ -227,7 +240,15 @@ let readTodaysMessagesOnOneBoard = (messageBoard, dateObj)=>{
 						resArr.push(`./DB/BOARDS/${messageBoard}/${dateObj.year}/${months[dateObj.month]}/${dateObj.day}/${a}`)
 					});
 
-					resolve(resArr);
+					// resolve(resArr);
+					// console.log(`resArr`);
+					// console.log(resArr);
+
+					getListOfMessageObjects(resArr).then((resArrFin)=>{
+						// console.log(`resArrFin`)
+						// console.log(resArrFin);
+						resolve(resArrFin);
+					})
 
 				}catch(err){
 					console.log(`Ok what did you do? how did you manage to brake it`);
@@ -294,7 +315,6 @@ let getListOfMessageObjects = (arrOfMessageLocations)=>{
 /*======================================
 =            Log In Fisrt Time            =
 ======================================*/
-
 let LogInFisrtTime = (req, res)=>{
 	checkLogin(req).then((userGood)=>{
 		if(userGood == true){
@@ -328,10 +348,45 @@ let LogInFisrtTime = (req, res)=>{
 		}
 	});
 };
-
 /*=====  End of LogInFisrtTime  ======*/
+/*===========================================
+=            Get Message To User            =
+===========================================*/
+let GetMessageToUser = (req, res)=>{
+	
+	console.log(`ok we got a thing`);
+
+	checkLogin(req).then((userGood)=>{
+		if(userGood == true){
+
+			if(req.body.board != undefined && req.body.board != ``){
+
+				readTodaysMessagesOnOneBoard(req.body.board).then((arrOfMessages)=>{
+					
+					console.log(arrOfMessages);
+
+					if(arrOfMessages){
+						res.send(arrOfMessages);
+					}else{
+						res.send(`10`);
+					}
+
+				})
+
+			}else{
+				res.send(`9`);
+			}
+
+		}else{
+			res.send(`8`)
+		}
+	})
+}
+/*=====  End of Get Message To User  ======*/
+
 /*----------  Exports  ----------*/
 module.exports ={
-	LogInFisrtTime
+	LogInFisrtTime,
+	GetMessageToUser
 
 }
