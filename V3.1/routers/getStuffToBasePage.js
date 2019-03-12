@@ -17,6 +17,8 @@ router.post(`/firstLogIn`, controller.LogInFisrtTime);
 
 router.post(`/messagesFromMessageBoard`, controller.GetMessageToUser);
 
+router.post(`/postMessage`, controller.PostNewMessageFroUser);
+
 /*=====  End of Routs  ======*/
 
 /*----------  Export  ----------*/

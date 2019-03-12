@@ -1,7 +1,23 @@
 
-<% for(let i = 0; i < boards.length; i++) { %>
+<p hidden id="boardForOtherScriptFiles"></p>
 
-<button class="boardButton"> <%= boards[i] %> </button>
-<br/>
+<div>
 
-<% } %>
+	<% for(let i = 0; i < boards.length; i++) { %>
+
+	<button class="boardButton"> <%= boards[i] %> </button>
+	<br/>
+
+	<% } %>
+
+</div>
+<br>
+<div id="postDiv" hidden>
+	
+	<input id="postTitle" type="text">
+	<br>
+	<textarea id="postBody" rows="4" cols="50"></textarea>
+	<br>
+	<button id="postButton"> post </button>
+
+</div>

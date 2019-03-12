@@ -17,9 +17,9 @@ let leapYearNo = ()=>{
 }
 
 //finds if leap year
-if((new Date().getFullYear() % 4) == 0 ){
-	if((new Date().getFullYear() % 100) == 0 ){
-		if((new Date().getFullYear() % 400) == 0 ){
+if((new Date().getUTCFullYear() % 4) == 0 ){
+	if((new Date().getUTCFullYear() % 100) == 0 ){
+		if((new Date().getUTCFullYear() % 400) == 0 ){
 			leapYearYes();
 		}else{
 			leapYearNo();
@@ -118,7 +118,7 @@ let checkLogin = (req)=>{
 								if(errr){ throw errr; }
 								if(passwordsAreGood == true){
 
-									console.log(`WOW your all good man`);
+									console.log(`✧*｡٩(ˊᗜˋ*)و✧*｡`);
 									resolve(true);
 
 								}else{
@@ -182,14 +182,19 @@ let cheackMessageIsGood = (messageObj)=>{
 /*=====================================
 =            Write Message            =
 =====================================*/
-let writeMessage = (messageBoard, messageObj)=>{
+let writeMessage = (messageBoard, messageObj, name)=>{
 	
 	return new Promise((resolve, reject)=>{
 		if(cheackMessageIsGood(messageObj) == true){
 
-			fs.writeFile(`./DB/BOARDS/${messageBoard}/${new Date().getFullYear()}/${months[new Date().getMonth()]}/${new Date().getDay()}/${new Date().getTime()}-${name}.json`, JSON.stringify({
+			let fileName = `${new Date().getTime()}-${name}`;
+
+			console.log(`./DB/BOARDS/${messageBoard}/${new Date().getFullYear()}/${months[new Date().getMonth()]}/${new Date().getUTCDate()}//${fileName}.json`);
+
+			fs.writeFile(`./DB/BOARDS/${messageBoard}/${new Date().getFullYear()}/${months[new Date().getMonth()]}/${new Date().getUTCDate()}/${fileName}.json`, JSON.stringify({
+				fileName : `${fileName}`,
 				title : `${messageObj.title}`,
-				boDy : `${messageObj.body}`
+				body : `${messageObj.body}`
 			}), (err)=>{
 				try{
 					if(err){throw err};
@@ -217,16 +222,16 @@ let readTodaysMessagesOnOneBoard = (messageBoard, dateObj)=>{
 
 	if(dateObj == undefined){
 		dateObj = {
-			year : `${new Date().getFullYear()}`,
-			month : `${new Date().getMonth()}`,
-			day : `${new Date().getUTCDate()}`
+			year : `${new Date().getUTCFullYear()}`,	// .getUTCFullYear()
+			month : `${new Date().getUTCMonth()}`,		// .getUTCMonth()
+			day : `${new Date().getUTCDate()}`			// 
 		}
 	}
 
 	// console.log(dateObj);
 
 	return new Promise((resolve, reject)=>{
-		if(dateObj.year != undefined && dateObj.year != `` && dateObj.year <= new Date().getFullYear() && dateObj.month != undefined && dateObj.month != `` &&  dateObj.month >= 1 &&  dateObj.month <= 11 && dateObj.day != undefined && dateObj.day != `` && dateObj.day >= 1 && dateObj.day <= 31 ){
+		if(dateObj.year != undefined && dateObj.year != `` && dateObj.year <= new Date().getUTCFullYear() && dateObj.month != undefined && dateObj.month != `` &&  dateObj.month >= 1 &&  dateObj.month <= 11 && dateObj.day != undefined && dateObj.day != `` && dateObj.day >= 1 && dateObj.day <= 31 ){
 
 			// console.log(`date`);
 			// console.log(`./DB/BOARDS/${messageBoard}/${dateObj.year}/${months[dateObj.month]}/${dateObj.day}`)
@@ -370,23 +375,70 @@ let GetMessageToUser = (req, res)=>{
 					}else{
 						res.send(`10`);
 					}
-
 				})
 
 			}else{
 				res.send(`9`);
 			}
-
 		}else{
 			res.send(`8`)
 		}
-	})
+	});
 }
 /*=====  End of Get Message To User  ======*/
+/*=================================================
+=            Post New Message Fro User            =
+=================================================*/
+let PostNewMessageFroUser = (req, res)=>{
+
+	console.log(` PostNewMessageFroUser is a go`);
+
+	checkLogin(req).then((userGood)=>{
+		console.log(`11`);
+		if(userGood == true){
+			console.log(`12`);
+			if(req.body.board != undefined && req.body.board != `` && req.body.messageObj != undefined){
+				console.log(`13`);
+				writeMessage(req.body.board, req.body.messageObj, req.body.userObj.username).then((messageWasPosted)=>{
+					console.log(`14`);
+					if(messageWasPosted == true){
+
+						console.log(`15`);
+
+						readTodaysMessagesOnOneBoard(req.body.board).then((arrOfMessages)=>{
+					
+							console.log(`16`);
+
+							if(arrOfMessages){
+								res.send(arrOfMessages);
+							}else{
+								console.log(`readTodaysMessagesOnOneBoard returned false`);
+								res.send(false);
+							}
+						})
+
+					}else{
+						console.log(`messge was not posted`);
+						res.send(false)
+					}
+				})
+			}else{
+				console.log(`board is no good bro`)
+				res.send(false)
+			}
+		}else{	
+			console.log(`user is no good`)
+			res.send(false);
+		}
+	})
+
+}
+/*=====  End of Post New Message Fro User  ======*/
+
 
 /*----------  Exports  ----------*/
 module.exports ={
 	LogInFisrtTime,
-	GetMessageToUser
-
+	GetMessageToUser,
+	PostNewMessageFroUser
 }
