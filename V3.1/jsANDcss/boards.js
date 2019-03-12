@@ -37,7 +37,8 @@ Array.from(document.getElementsByClassName(`boardButton`)).forEach((a)=>{
 						if(messages[0] != null){
 							
 							for(i = 0; i < messages.length; i++){
-								message = JSON.parse(messages[i])
+
+								let message = JSON.parse(messages[i]);
 
 								tempAddStr = tempAddStr + `<p> ${message.title} </p> <p> ${message.body} </p> <hr>`;
 								// console.log(`<br> <p> ${message[0].title} </p> <p> ${message[0].body} </p>`);
@@ -91,12 +92,31 @@ document.getElementById(`postButton`).onclick = ()=>{
 				/*===============================================
 				=            WERE THE SHIT GOSE DOWN            =
 				===============================================*/
+
+				// console.log(this.responseText);
+				// console.log(typeof this.responseText);
+				// console.log(JSON.parse(this.responseText));
+				// console.log(typeof JSON.parse(this.responseText));
+
+				if(this.responseText){
+					let newMessages =  JSON.parse(this.responseText).arrOfMessages;
+					let tempAddStr = ``;
+					
+					for(i = 0; i < newMessages.length; i++){
+
+						let message = JSON.parse(newMessages[i]);
+
+						tempAddStr = tempAddStr + `<p> ${message.title} </p> <p> ${message.body} </p> <hr>`;
+						// console.log(`<br> <p> ${message[0].title} </p> <p> ${message[0].body} </p>`);
+					}
+					document.getElementById(`MESSAGES`).innerHTML = tempAddStr;
+
+				}else{
+					console.log(`errr fix this later`)
+				}
 				
-				console.log(this.responseText);
 
-				let messages =  JSON.parse(this.responseText);
-
-				console.log(message);
+				// console.log(newMessages);
 
 				/*=====  End of WERE THE SHIT GOSE DOWN  ======*/
 			}

@@ -409,8 +409,19 @@ let PostNewMessageFroUser = (req, res)=>{
 					
 							console.log(`16`);
 
+							// console.log(arrOfMessages);
+							// console.log(arrOfMessages != false);
+
+							console.log(`thing`);
+
+							console.log(JSON.parse(JSON.stringify({
+								arrOfMessages : arrOfMessages
+							})));
+
 							if(arrOfMessages){
-								res.send(arrOfMessages);
+								res.send( JSON.stringify({
+									arrOfMessages : arrOfMessages
+								}) );
 							}else{
 								console.log(`readTodaysMessagesOnOneBoard returned false`);
 								res.send(false);
