@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<!-- Select a file: <input id="fileIGot" type="file" name="myFile"><br><br> -->
+	
+	<!-- <button id="goButton">
+		go
+	</button> -->
+	
+	<input id="myFiles" type="file" multiple onchange="getFiles()" />
+
+	<script type="text/javascript">
+		
+		// document.getElementById(`goButton`).onclick = ()=>{
+			
+		// 	let file = JSON.stringify( document.getElementById(`fileIGot`).files[0] );
+		// 	console.log(file);
+
+		// 	// let xhttp = new XMLHttpRequest();
+
+		// 	// xhttp.onreadystatechange = function(){
+		// 	// 	if (this.readyState == 4 && this.status == 200) {
+					
+		// 	// 		console.log(this.responseText);
+					
+		// 	// 	}
+		// 	// }
+
+		// 	let obj = JSON.stringify({
+		// 		"file" : JSON.stringify(file)
+		// 	});
+
+		// 	console.log(obj);
+
+		// 	// xhttp.open("POST", "/oh", true);
+		// 	// xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		// 	// xhttp.send()
+
+		// 	// function onFileInputChange(event) {
+				
+		// 		// const file = event.target.files[0];
+		// 		// const file = document.getElementById(`fileIGot`).files[0];
+		// 		// const reader = new FileReader();
+				
+		// 		// reader.addEventListener('load', () => {
+		// 		// 	// do something with reader.result here.
+		// 		// 	console.log(`?`);
+
+		// 		// }, false);
+				
+		// 		// if (file) { reader.readAsText(file); }
+		// 	// }
+
+		// 	// document.querySelector('input[type="file"]').addEventListener('change', onFileInputChange)
+
+		// }
+
+		function getFiles(){
+		var files = document.getElementById("myFiles").files;
+		var myArray = [];
+		var file = {};
+
+		console.log(files); // see the FileList
+
+		// manually create a new file obj for each File in the FileList
+		for(var i = 0; i < files.length; i++){
+
+			file = {
+				'lastMod'    : files[i].lastModified,
+				'lastModDate': files[i].lastModifiedDate,
+				'name'       : files[i].name,
+				'size'       : files[i].size,
+				'type'       : files[i].type,
+			}
+
+			//add the file obj to your array
+			myArray.push(file)
+		}
+
+		//stringify array
+		console.log(JSON.stringify(myArray));
+	}
+
+	</script>
+</body>
+</html>

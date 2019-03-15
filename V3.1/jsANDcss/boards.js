@@ -28,26 +28,24 @@ Array.from(document.getElementsByClassName(`boardButton`)).forEach((a)=>{
 						let messages =  JSON.parse(this.responseText);
 						let tempAddStr = ``;
 
-						console.log(messages);
-						// console.log(typeof messages);
-						// console.log(messages[0]);
-						// console.log(messages[0] == null);
-
+						// console.log(messages);
 
 						if(messages[0] != null){
 							
-							for(i = 0; i < messages.length; i++){
+							for(i = messages.length; i > 0; i--){
 
-								let message = JSON.parse(messages[i]);
+								// console.log(i);
+
+								let message = JSON.parse(messages[i - 1]);
+
+								// console.log(message);
 
 								tempAddStr = tempAddStr + `<p> ${message.title} </p> <p> ${message.body} </p> <hr>`;
-								// console.log(`<br> <p> ${message[0].title} </p> <p> ${message[0].body} </p>`);
 							}
 							document.getElementById(`MESSAGES`).innerHTML = tempAddStr;
 
 						}else{
 							document.getElementById(`MESSAGES`).innerHTML = ``;
-							// console.log(`no messages today`);
 						}
 						
 						document.getElementById(`boardForOtherScriptFiles`).innerHTML = `${a.textContent.substring(1, a.textContent.length - 1)}`;
@@ -75,9 +73,6 @@ Array.from(document.getElementsByClassName(`boardButton`)).forEach((a)=>{
 });
 
 document.getElementById(`postButton`).onclick = ()=>{
-	
-	// console.log(`${document.getElementById(`boardForOtherScriptFiles`).innerHTML}`);
-	// console.log(`${document.getElementById(`boardForOtherScriptFiles`).innerHTML.length}`);
 
 	console.log(`title`);
 	console.log(`${document.getElementById(`postTitle`).value}`);
@@ -89,34 +84,35 @@ document.getElementById(`postButton`).onclick = ()=>{
 
 		xhttpTwo.onreadystatechange = function(){
 			if (this.readyState == 4 && this.status == 200) {
+				
 				/*===============================================
 				=            WERE THE SHIT GOSE DOWN            =
 				===============================================*/
 
-				// console.log(this.responseText);
-				// console.log(typeof this.responseText);
-				// console.log(JSON.parse(this.responseText));
-				// console.log(typeof JSON.parse(this.responseText));
-
 				if(this.responseText){
+					
 					let newMessages =  JSON.parse(this.responseText).arrOfMessages;
 					let tempAddStr = ``;
-					
-					for(i = 0; i < newMessages.length; i++){
 
-						let message = JSON.parse(newMessages[i]);
+					for(i = newMessages.length; i > 0; i--){
+
+						// console.log(i);
+
+						let message = JSON.parse(newMessages[i - 1]);
+
+						// console.log(message);
 
 						tempAddStr = tempAddStr + `<p> ${message.title} </p> <p> ${message.body} </p> <hr>`;
-						// console.log(`<br> <p> ${message[0].title} </p> <p> ${message[0].body} </p>`);
+
 					}
 					document.getElementById(`MESSAGES`).innerHTML = tempAddStr;
 
 				}else{
-					console.log(`errr fix this later`)
+					// console.log(`errr fix this later`)
 				}
-				
 
-				// console.log(newMessages);
+				document.getElementById(`postTitle`).value = ``;
+				document.getElementById(`postBody`).innerHTML = ``;
 
 				/*=====  End of WERE THE SHIT GOSE DOWN  ======*/
 			}
