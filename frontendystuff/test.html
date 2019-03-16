@@ -1,35 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>test</title>
 </head>
 <body>
 	
-	<p>this is like the worst way to solve your problams</p>
+	<select id="monthsId" onchange="setupDays()">
+	</select>
+	<select id="daysId" onchange="" hidden>
+	</select>
+
+	<button onclick="()" hidden="">
+		Go
+	</button>
 	
 	<script type="text/javascript">
 		
-		let str = `0000000000`;
+		let months = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December` ];
 
-		console.log(str);
+		let tempStrForMonthsId = ``;
 
-		//
+		for(let i = 0; i < months.length; i++){
+			tempStrForMonthsId = tempStrForMonthsId + `<option value="${months[i]}" >${months[i]}</option>`
+		}
 
-		let encodedData = window.btoa(str);
-		
-		console.log(encodedData);
+		document.getElementById(`monthsId`).innerHTML = tempStrForMonthsId;
 
-		//
+		/*----------  Subsection comment block  ----------*/
+		let daysInEachMonths = [31, undefined, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+		let setupDays = ()=>{
+			
+			let numOfDays = 0;
 
-		let decodedData = window.atob(encodedData);
+			console.log( daysInEachMonths[months.indexOf(document.getElementById(`monthsId`).value)] );
+			if(daysInEachMonths[months.indexOf(document.getElementById(`monthsId`).value)] != undefined){
 
-		console.log(decodedData);
+				numOfDays = daysInEachMonths[months.indexOf(document.getElementById(`monthsId`).value)];
 
-		//
+			}else{
+				if((new Date().getUTCFullYear() % 4) == 0 ){
+					if((new Date().getUTCFullYear() % 100) == 0 ){
+						if((new Date().getUTCFullYear() % 400) == 0 ){
+							numOfDays = 29;
+						}else{
+							numOfDays = 28;
+						}
+					}else{
+						numOfDays = 29;
+					}
+				}else{
+					numOfDays = 28;
+				}
+			}
+
+			let tempStrForDaysId = ``
+
+			for(let i = 1; i <= numOfDays; i++){
+				console.log(i);
+				tempStrForDaysId = tempStrForDaysId + `<option value="${i}" >${i}</option>`
+			}
+
+			document.getElementById(`daysId`).innerHTML = tempStrForDaysId;
+			document.getElementById(`daysId`).removeAttribute(`hidden`)
+
+		}
 
 	</script>
 
 </body>
 </html>
-
-
-MDAwMDAwMDAwMA==

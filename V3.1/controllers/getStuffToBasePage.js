@@ -172,9 +172,15 @@ let getAllBOARDS = ()=>{
 =            Cheack Message Is Good            =
 ==============================================*/
 let cheackMessageIsGood = (messageObj)=>{
-	if(messageObj.title != undefined && messageObj.title != `` && messageObj.body != undefined && messageObj.body != `` ){
+	
+	console.log(`messageObj`);
+	console.log(messageObj);
+
+	if(messageObj.title != undefined && messageObj.title != `` && messageObj.title.length <= 50 && messageObj.body != undefined && messageObj.body != `` && messageObj.body.length <= 5000){
+		console.log(`good form cheackMessageIsGood`);
 		return(true);
 	}else{
+		console.log(`bad form cheackMessageIsGood`);
 		return(false);
 	}
 }
@@ -183,7 +189,7 @@ let cheackMessageIsGood = (messageObj)=>{
 =            Write Message            =
 =====================================*/
 let writeMessage = (messageBoard, messageObj, name)=>{
-	
+
 	return new Promise((resolve, reject)=>{
 		if(cheackMessageIsGood(messageObj) == true){
 
@@ -220,21 +226,22 @@ let writeMessage = (messageBoard, messageObj, name)=>{
 =======================================================*/
 let readTodaysMessagesOnOneBoard = (messageBoard, dateObj)=>{
 
-	if(dateObj == undefined){
+	// console.log(`dateObj`);
+	// console.log(dateObj)
+
+	if(dateObj == undefined | dateObj == ``){
 		dateObj = {
-			year : `${new Date().getUTCFullYear()}`,	// .getUTCFullYear()
-			month : `${new Date().getUTCMonth()}`,		// .getUTCMonth()
-			day : `${new Date().getUTCDate()}`			// 
+			year : `${new Date().getUTCFullYear()}`,
+			month : `${new Date().getUTCMonth()}`,	
+			day : `${new Date().getUTCDate()}`
 		}
 	}
 
-	// console.log(dateObj);
+	console.log(`dateObj`);
+	console.log(dateObj);
 
 	return new Promise((resolve, reject)=>{
 		if(dateObj.year != undefined && dateObj.year != `` && dateObj.year <= new Date().getUTCFullYear() && dateObj.month != undefined && dateObj.month != `` &&  dateObj.month >= 1 &&  dateObj.month <= 11 && dateObj.day != undefined && dateObj.day != `` && dateObj.day >= 1 && dateObj.day <= 31 ){
-
-			// console.log(`date`);
-			// console.log(`./DB/BOARDS/${messageBoard}/${dateObj.year}/${months[dateObj.month]}/${dateObj.day}`)
 
 			fs.readdir(`./DB/BOARDS/${messageBoard}/${dateObj.year}/${months[dateObj.month]}/${dateObj.day}`, (err, files)=>{
 				try{
@@ -245,13 +252,7 @@ let readTodaysMessagesOnOneBoard = (messageBoard, dateObj)=>{
 						resArr.push(`./DB/BOARDS/${messageBoard}/${dateObj.year}/${months[dateObj.month]}/${dateObj.day}/${a}`)
 					});
 
-					// resolve(resArr);
-					// console.log(`resArr`);
-					// console.log(resArr);
-
 					getListOfMessageObjects(resArr).then((resArrFin)=>{
-						// console.log(`resArrFin`)
-						// console.log(resArrFin);
 						resolve(resArrFin);
 					})
 
@@ -366,7 +367,7 @@ let GetMessageToUser = (req, res)=>{
 
 			if(req.body.board != undefined && req.body.board != ``){
 
-				readTodaysMessagesOnOneBoard(req.body.board).then((arrOfMessages)=>{
+				readTodaysMessagesOnOneBoard(req.body.board, req.body.dateObj).then((arrOfMessages)=>{
 					
 					console.log(arrOfMessages);
 
@@ -391,6 +392,8 @@ let GetMessageToUser = (req, res)=>{
 =================================================*/
 let PostNewMessageFroUser = (req, res)=>{
 
+	console.log(req.body);
+
 	console.log(` PostNewMessageFroUser is a go`);
 
 	checkLogin(req).then((userGood)=>{
@@ -408,9 +411,6 @@ let PostNewMessageFroUser = (req, res)=>{
 						readTodaysMessagesOnOneBoard(req.body.board).then((arrOfMessages)=>{
 					
 							console.log(`16`);
-
-							// console.log(arrOfMessages);
-							// console.log(arrOfMessages != false);
 
 							console.log(`thing`);
 

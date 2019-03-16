@@ -17,6 +17,7 @@ board : <messageBoard>,
 --------------------------------------------------
 LIST
 --------------------------------------------------
-- add way to make user acounts
-- add way to change user asswords
+- add way to change user passwords
 - add some beter grpaphics
+- way to see mesages from mutltiple days
+- limmet post size

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>thing</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		.loader {
+			visibility : hidden;
+			border: 16px solid #f3f3f3;
+			border-radius: 50%;
+			border-top: 16px solid blue;
+			border-right: 16px solid green;
+			border-bottom: 16px solid red;
+			border-left: 16px solid pink;
+			width: 120px;
+			height: 120px;
+			-webkit-animation: spin 2s linear infinite;
+			animation: spin 2s linear infinite;
+		}
+
+		@-webkit-keyframes spin {
+			0% { -webkit-transform: rotate(0deg); }
+			100% { -webkit-transform: rotate(360deg); }
+		}
+
+		@keyframes spin {
+			0% { transform: rotate(0deg); }
+			100% { transform: rotate(360deg); }
+		}
+
+	</style>
+</head>
+<body>
+<center>
+
+	<br>
+		
+	<button onclick="doThing()">
+		go
+	</button>
+
+<br>
+<br>
+
+	<div class="loader"></div>
+
+</center>
+	
+	<script type="text/javascript">
+		
+		let doThing = ()=>{
+
+			// console.log(`ok`);
+			if(document.getElementsByClassName(`loader`)[0].style.visibility == 'visible'){
+				document.getElementsByClassName(`loader`)[0].style.visibility='hidden'
+			}else{
+				document.getElementsByClassName(`loader`)[0].style.visibility='visible'
+			}
+
+		}
+
+	</script>
+
+</body>
+</html>
