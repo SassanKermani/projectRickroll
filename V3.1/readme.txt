@@ -18,6 +18,5 @@ board : <messageBoard>,
 LIST
 --------------------------------------------------
 - add way to change user passwords
-- add some beter grpaphics
-- way to see mesages from mutltiple days
-- limmet post size
+- add picture of link
+- shufle endpoints
